@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pointer Events Logger</title>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  body {
+    font-family: monospace;
+  }
+  #log {
+    height: 100%;
+    overflow-y: auto;
+    white-space: pre;
+    padding: 8px;
+    background: #111;
+    color: #0f0;
+  }
+</style>
+</head>
+<body>
+
+<div id="log">Pointer event log</div>
+
+<script>
+const logEl = document.getElementById("log");
+
+function logEvent(e) {
+  const msg =
+    `${e.type.padEnd(15)} ` +
+    `id=${e.pointerId} ` +
+    `type=${e.pointerType.padEnd(5)} ` +
+    `btn=${e.button} ` +
+    `buttons=${e.buttons} ` +
+    `x=${Math.round(e.clientX)} ` +
+    `y=${Math.round(e.clientY)} ` +
+    `pressure=${e.pressure}`;
+
+  console.log(e.type, e);
+  logEl.textContent += "\n" + msg;
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+const pointerEvents = [
+  "pointerdown",
+  "pointerup",
+];
+
+pointerEvents.forEach(type => {
+  document.addEventListener(type, logEvent);
+});
+</script>
+
+</body>
+</html>
